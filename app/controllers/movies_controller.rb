@@ -38,6 +38,18 @@ class MoviesController < ApplicationController
     else
       @movies
     end
+    sort = params[:sort] || session[:sort]
+    if params[:sort] != session[:sort]
+      session[:sort] = sort
+      flash.keep
+      redirect_to :sort => sort, :ratings => session[:ratings] and return
+    end
+
+    if params[:ratings] != session[:ratings] 
+      session[:sort] = sort
+      flash.keep
+      redirect_to :sort => sort, :ratings => session[:ratings] and return
+    end
   end
 
   def new
